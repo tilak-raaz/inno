@@ -1,0 +1,20 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="64.5097" height="48.3823" viewBox="0 0 64.5097 48.3823" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="AsteroidC" opacity="0.45" clip-path="url(#clip0_0_27)">
+<path id="Vector" d="M3.12663 25.6722C1.15185 14.8109 9.05099 3.94954 21.8871 1.97476C30.7736 -2.97529e-05 43.6098 3.94954 52.4963 12.8361C61.3828 21.7226 62.3702 35.5461 53.4837 43.4453C43.6098 51.3444 29.7863 49.3696 18.9249 44.4327C8.0636 39.4957 5.10142 36.5335 3.12663 25.6722Z" fill="url(#paint0_radial_0_27)"/>
+<path id="Vector_2" d="M10.0383 13.8235C17.9375 7.89912 28.7988 10.8613 31.761 17.7731" stroke="white" stroke-opacity="0.07" stroke-width="0.740545"/>
+<path id="Vector_3" d="M26.8241 25.6722C29.0054 25.6722 30.7736 23.9039 30.7736 21.7226C30.7736 19.5413 29.0054 17.7731 26.8241 17.7731C24.6428 17.7731 22.8745 19.5413 22.8745 21.7226C22.8745 23.9039 24.6428 25.6722 26.8241 25.6722Z" fill="black" fill-opacity="0.32"/>
+<path id="Vector_4" d="M43.6099 20.2416C44.9732 20.2416 46.0784 19.1364 46.0784 17.7731C46.0784 16.4098 44.9732 15.3046 43.6099 15.3046C42.2466 15.3046 41.1414 16.4098 41.1414 17.7731C41.1414 19.1364 42.2466 20.2416 43.6099 20.2416Z" fill="black" fill-opacity="0.2"/>
+<path id="Vector_5" d="M16.9502 34.5587C18.0409 34.5587 18.925 33.6746 18.925 32.584C18.925 31.4933 18.0409 30.6092 16.9502 30.6092C15.8596 30.6092 14.9755 31.4933 14.9755 32.584C14.9755 33.6746 15.8596 34.5587 16.9502 34.5587Z" fill="black" fill-opacity="0.18"/>
+<path id="Vector_6" d="M3.12663 25.6722C1.15185 14.8109 9.05099 3.94954 21.8871 1.97476C30.7736 -2.97529e-05 43.6098 3.94954 52.4963 12.8361" stroke="#5032B4" stroke-opacity="0.28" stroke-width="5.92436" stroke-linecap="round"/>
+</g>
+<defs>
+<radialGradient id="paint0_radial_0_27" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(18.7433 12.8244) scale(38.6581 32.1526)">
+<stop stop-color="#251060"/>
+<stop offset="0.45" stop-color="#120830"/>
+<stop offset="1" stop-color="#05030C"/>
+</radialGradient>
+<clipPath id="clip0_0_27">
+<rect width="64.5097" height="48.3823" fill="white"/>
+</clipPath>
+</defs>
+</svg>

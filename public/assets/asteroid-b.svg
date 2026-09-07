@@ -1,0 +1,19 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="70.9607" height="63.8646" viewBox="0 0 70.9607 63.8646" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="AsteroidB" opacity="0.5" clip-path="url(#clip0_0_34)">
+<path id="Vector" d="M5.16038 32.2548C2.57999 18.0627 12.9015 3.87057 28.3839 2.58038C41.2858 1.29018 56.7681 10.3215 64.5093 24.5137C72.2505 38.7058 63.2191 56.7685 47.7368 61.9293C30.9643 67.0901 7.74077 49.0274 5.16038 32.2548Z" fill="url(#paint0_radial_0_34)"/>
+<path id="Vector_2" d="M14.1919 19.3529C21.9331 14.1922 32.2546 16.7725 34.835 24.5137" stroke="white" stroke-opacity="0.06" stroke-width="0.967646"/>
+<path id="Vector_3" d="M28.3839 31.6098C30.8778 31.6098 32.8996 29.588 32.8996 27.0941C32.8996 24.6002 30.8778 22.5784 28.3839 22.5784C25.8899 22.5784 23.8682 24.6002 23.8682 27.0941C23.8682 29.588 25.8899 31.6098 28.3839 31.6098Z" fill="black" fill-opacity="0.3"/>
+<path id="Vector_4" d="M45.1565 23.2235C46.5816 23.2235 47.7369 22.0682 47.7369 20.6431C47.7369 19.218 46.5816 18.0627 45.1565 18.0627C43.7314 18.0627 42.5761 19.218 42.5761 20.6431C42.5761 22.0682 43.7314 23.2235 45.1565 23.2235Z" fill="black" fill-opacity="0.22"/>
+<path id="Vector_5" d="M5.16038 32.2548C2.57999 18.0627 12.9015 3.87057 28.3839 2.58038C41.2858 1.29018 56.7681 10.3215 64.5093 24.5137" stroke="#643CC8" stroke-opacity="0.3" stroke-width="6.45097" stroke-linecap="round"/>
+</g>
+<defs>
+<radialGradient id="paint0_radial_0_34" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(23.5351 17.5502) scale(43.7965 42.2578)">
+<stop stop-color="#341870"/>
+<stop offset="0.4" stop-color="#180C40"/>
+<stop offset="1" stop-color="#060310"/>
+</radialGradient>
+<clipPath id="clip0_0_34">
+<rect width="70.9607" height="63.8646" fill="white"/>
+</clipPath>
+</defs>
+</svg>

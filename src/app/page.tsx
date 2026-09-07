@@ -1,11 +1,15 @@
-import Image from "next/image";
+import { Hero } from "@/components/hero/Hero";
+import { About } from "@/components/home/About";
+import { Schedule } from "@/components/home/Schedule";
+import { Sponsors } from "@/components/home/Sponsors";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex"></div>
-      </main>
-
-  )
-          
+    <>
+      <Hero />
+      <About />
+      <Schedule />
+      <Sponsors />
+    </>
+  );
 }

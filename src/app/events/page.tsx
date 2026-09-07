@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RequireSignIn } from "@/components/auth/RequireSignIn";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { EventExplorer } from "./Event";
 import { events } from "@/data/events";
@@ -9,9 +10,16 @@ export const metadata: Metadata = {
     "Ten destinations across robotics, software, aeromodelling, management and more. Explore the INNOVISION 2026 event universe.",
 };
 
-export default function EventsPage() {
+/* Reads the session, so it cannot be statically rendered. */
+export const dynamic = "force-dynamic";
+
+export default async function EventsPage() {
   return (
-    <>
+    <RequireSignIn
+      title="Sign in to explore the events"
+      lead="The event universe is open to registered accounts. Sign in and every destination unlocks."
+      callbackURL="/events"
+    >
       <PageHeader
         eyebrow="Destinations"
         title="Explore the event universe"
@@ -26,6 +34,6 @@ export default function EventsPage() {
       <section className="pb-28 sm:pb-36">
         <EventExplorer />
       </section>
-    </>
+    </RequireSignIn>
   );
 }

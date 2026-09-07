@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RequireSignIn } from "@/components/auth/RequireSignIn";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Showroom } from "@/components/merch/Showroom";
 import { products } from "@/data/merch";
@@ -9,9 +10,16 @@ export const metadata: Metadata = {
     "Official INNOVISION 2026 merchandise — hoodies, tees, caps and archive prints from the orbital showroom.",
 };
 
-export default function MerchPage() {
+/* Reads the session, so it cannot be statically rendered. */
+export const dynamic = "force-dynamic";
+
+export default async function MerchPage() {
   return (
-    <>
+    <RequireSignIn
+      title="Sign in to enter the showroom"
+      lead="Merch is reserved for INNOVISION accounts. Sign in to browse and order."
+      callbackURL="/merch"
+    >
       <PageHeader
         eyebrow="Orbital showroom"
         title="Wear the mission"
@@ -26,6 +34,6 @@ export default function MerchPage() {
       <section className="pb-28 sm:pb-36">
         <Showroom />
       </section>
-    </>
+    </RequireSignIn>
   );
 }

@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { navLinks, registerLink, site } from "@/data/site";
+import { authClient, useSession } from "@/lib/auth-client";
+import { UserMenu } from "./UserMenu";
 
 /**
  * Primary navigation.
@@ -15,8 +17,11 @@ import { navLinks, registerLink, site } from "@/data/site";
  */
 export function Nav() {
   const pathname = usePathname();
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { data: session, isPending } = useSession();
+  const user = session?.user ?? null;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -118,12 +123,19 @@ export function Nav() {
           {/* right — primary action */}
           <div className="flex items-center gap-5">
             <span className="hud hidden xl:block">{site.dates}</span>
-            <Link href={registerLink.href} className="nav-cta">
-              {registerLink.label}
-              <span aria-hidden className="text-[0.85em]">
-                ↗
-              </span>
-            </Link>
+            {/* Reserve the slot while the session resolves so the bar doesn't jump. */}
+            {isPending ? (
+              <span aria-hidden className="h-10 w-10 rounded-full border border-[var(--line)] opacity-40" />
+            ) : user ? (
+              <UserMenu user={user} />
+            ) : (
+              <Link href={registerLink.href} className="nav-cta">
+                {registerLink.label}
+                <span aria-hidden className="text-[0.85em]">
+                  ↗
+                </span>
+              </Link>
+            )}
           </div>
         </nav>
       </header>
@@ -145,7 +157,7 @@ export function Nav() {
           className="relative flex h-full flex-col justify-center px-(--gutter) pb-16 pt-(--nav-h)"
         >
           <ul className="space-y-1">
-            {[...navLinks, registerLink].map((link, i) => (
+            {[...navLinks, ...(user ? [{ href: "/register", label: "My registration", sub: "Your manifest" }] : [registerLink])].map((link, i) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
@@ -173,6 +185,20 @@ export function Nav() {
               </li>
             ))}
           </ul>
+          {user ? (
+            <button
+              type="button"
+              tabIndex={open ? 0 : -1}
+              onClick={async () => {
+                await authClient.signOut();
+                router.push("/");
+                router.refresh();
+              }}
+              className="mt-8 self-start font-display text-xs font-semibold uppercase tracking-[0.16em] text-text-muted underline underline-offset-4 transition-colors hover:text-rose-200"
+            >
+              Sign out
+            </button>
+          ) : null}
           <p className="hud mt-10">
             {site.dates} — {site.host}
           </p>

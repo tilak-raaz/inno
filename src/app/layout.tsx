@@ -3,6 +3,7 @@ import { Orbitron, Space_Grotesk } from "next/font/google";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/footer/Footer";
 import { Starfield } from "@/components/ui/Starfield";
+import { Preloader } from "@/components/ui/Preloader";
 import { site } from "@/data/site";
 import "./globals.css";
 
@@ -41,6 +42,8 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
+import { AudioProvider } from "@/contexts/AudioContext";
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -55,12 +58,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </noscript>
       </head>
       <body className="flex min-h-full flex-col bg-ink">
-        <Starfield />
-        <Nav />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        <AudioProvider>
+          <div className="custom-cursor" aria-hidden="true" />
+          <div className="custom-cursor-dot" aria-hidden="true" />
+          <Preloader />
+          <Starfield />
+          <Nav />
+          <main id="main" className="flex-1 relative z-10">
+            {children}
+          </main>
+          <Footer />
+        </AudioProvider>
       </body>
     </html>
   );

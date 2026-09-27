@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Planet } from "./Planet";
 
@@ -40,28 +42,46 @@ const ASTEROIDS = [
   { src: "/assets/asteroid-a-large.svg", left: 0.32, top: 787, boxW: 446.676, boxH: 384.373, w: 432.617, h: 367.724, spin: -177.76, driftX: 6, driftY: 11, dur: 30, delay: -15, flip: true },
 ];
 
+import { motion } from "framer-motion";
+
 export function Hero() {
   return (
     <section
-      className="hero relative isolate flex min-h-svh w-full items-center justify-center overflow-clip bg-ink"
+      className="hero relative isolate flex min-h-svh w-full items-center justify-center overflow-clip bg-transparent"
       aria-labelledby="hero-title"
     >
       {/* ---------- atmosphere layer (non-interactive) ---------- */}
       <div className="hero-stage pointer-events-none">
+        {/* Abstract Geometric HUD / Tech element - non AI, code generated */}
+        <motion.div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20 mix-blend-screen"
+          animate={{ rotate: 360, scale: [1, 1.05, 1] }}
+          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+        >
+          <svg width="800" height="800" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="400" cy="400" r="380" stroke="#7c3aed" strokeWidth="2" strokeDasharray="10 20"/>
+            <circle cx="400" cy="400" r="300" stroke="#c4b5fd" strokeWidth="1" strokeDasharray="5 50"/>
+            <path d="M400 0L400 800M0 400L800 400" stroke="#a78bfa" strokeWidth="1" opacity="0.3"/>
+            <rect x="250" y="250" width="300" height="300" stroke="#5b21b6" strokeWidth="2" strokeDasharray="2 10" fill="none"/>
+          </svg>
+        </motion.div>
+
         {/* planet stack, 4:147 – 4:160, centred on Figma (864, 418.94) */}
-        <div
+        <motion.div
           className="absolute"
           style={{
             left: u(864),
             top: u(418.94),
             ["--pd" as string]: u(1161.175),
           }}
+          animate={{ y: [0, -15, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         >
           <Planet
             rings
-            className="animate-breathe [--breathe-dur:12s] [--breathe-hi:1] [--breathe-lo:0.93]"
+            className="hero-planet animate-breathe [--breathe-dur:12s] [--breathe-hi:1] [--breathe-lo:0.93]"
           />
-        </div>
+        </motion.div>
 
         {/* 4:161 — violet limb burning along the planet's lower edge */}
         <div
@@ -80,7 +100,7 @@ export function Hero() {
 
         {/* 4:164 / 4:255 — horizon flares, additive */}
         <div
-          className="absolute mix-blend-plus-lighter"
+          className="hero-horizon hero-horizon-right absolute mix-blend-plus-lighter"
           style={{
             left: u(950.39),
             top: u(738.26),
@@ -92,7 +112,7 @@ export function Hero() {
           }}
         />
         <div
-          className="absolute mix-blend-plus-lighter"
+          className="hero-horizon hero-horizon-left absolute mix-blend-plus-lighter"
           style={{
             left: u(-119),
             top: u(738.26),
@@ -117,7 +137,7 @@ export function Hero() {
 
         {/* asteroid field, 4:166 – 4:256 */}
         {ASTEROIDS.map((a, i) => (
-          <div
+          <motion.div
             key={i}
             className="absolute flex items-center justify-center"
             style={{
@@ -125,6 +145,15 @@ export function Hero() {
               top: u(a.top),
               width: u(a.boxW),
               height: u(a.boxH),
+            }}
+            animate={{
+              y: [0, i % 2 === 0 ? 10 : -10, 0],
+            }}
+            transition={{
+              duration: 5 + i,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: i * 0.2,
             }}
           >
             <div style={a.flip ? { transform: "scaleY(-1)" } : undefined}>
@@ -149,7 +178,7 @@ export function Hero() {
                 />
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
 
         {/* 4:214 — second bottom fade, seats the hero into the page */}
@@ -168,9 +197,6 @@ export function Hero() {
           style={{
             top: u(-9),
             height: u(294),
-            /* Figma has this as pure black; matched to the page ink instead so
-               the frame's top edge is seamless on viewports taller than the
-               stage, where the cut would otherwise show. */
             backgroundImage:
               "linear-gradient(to bottom, #06030e 0%, #06030e 6%, rgba(6,3,14,0) 100%)",
           }}
@@ -180,38 +206,57 @@ export function Hero() {
       {/* ---------- type layer, on the same stage (4:215) ---------- */}
       <div className="hero-stage z-10">
         <Centred top={Y_TITLE}>
-          <h1
+          <motion.h1
             id="hero-title"
-            className="hero-title animate-fade-up [--fade-delay:0.15s]"
+            className="hero-title"
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
           >
             Innovision
-          </h1>
+          </motion.h1>
         </Centred>
 
         <Centred top={Y_YEAR}>
-          <p className="hero-year animate-fade-up [--fade-delay:0.3s]">2026</p>
+          <motion.p
+            className="hero-year"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.6 }}
+          >
+            2026
+          </motion.p>
         </Centred>
 
         <Centred top={Y_CTA}>
-          <Link
-            href="/#about"
-            className="btn-primary hero-cta animate-fade-up pointer-events-auto [--fade-delay:0.45s]"
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.9 }}
           >
-            <span>Explore more about Innovision</span>
-            {/* 4:229 icon well + 4:254 play glyph */}
-            <span className="hero-cta-well" aria-hidden>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/assets/polygon-play.svg" alt="" className="hero-cta-glyph" />
-            </span>
-          </Link>
+            <Link
+              href="/#about"
+              className="btn-primary hero-cta pointer-events-auto"
+            >
+              <span>Explore more about Innovision</span>
+              <span className="hero-cta-well" aria-hidden>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/assets/polygon-play.svg" alt="" className="hero-cta-glyph" />
+              </span>
+            </Link>
+          </motion.div>
         </Centred>
       </div>
 
-      {/* Instrumentation, not decoration: the only element added to the frame. */}
-      <div className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-center sm:bottom-8">
+      <motion.div
+        className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-center sm:bottom-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 1 }}
+      >
         <div className="mx-auto h-9 w-px bg-gradient-to-b from-transparent via-[rgba(167,139,250,0.55)] to-transparent" />
         <span className="hud mt-3 block">Scroll to descend</span>
-      </div>
+      </motion.div>
     </section>
   );
 }

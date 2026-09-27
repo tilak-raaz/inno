@@ -52,6 +52,8 @@
 
   /* Figma stage unit. 1 at a 1728px-wide viewport. */
   --fu: calc(100cqw / 1728);
+  --pointer-x: 50%;
+  --pointer-y: 35%;
 }
 
 @theme inline {
@@ -99,6 +101,87 @@ body {
   font-family: var(--font-space-grotesk), "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   font-synthesis-weight: none;
   overflow-x: clip;
+  cursor: none;
+}
+
+a, button, [role="button"] {
+  cursor: none;
+}
+
+.custom-cursor {
+  position: fixed;
+  left: var(--pointer-x);
+  top: var(--pointer-y);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid rgba(167, 139, 250, 0.6);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  transition: width 0.2s var(--ease-out-cine), height 0.2s var(--ease-out-cine), background 0.2s var(--ease-out-cine);
+}
+
+.custom-cursor-dot {
+  position: fixed;
+  left: var(--pointer-x);
+  top: var(--pointer-y);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 10px 2px rgba(167, 139, 250, 0.8);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+}
+
+body:has(a:hover, button:hover, [role="button"]:hover) .custom-cursor {
+  width: 40px;
+  height: 40px;
+  background: rgba(167, 139, 250, 0.15);
+  border-color: rgba(167, 139, 250, 0.9);
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  content: "";
+  opacity: 0.7;
+  background: radial-gradient(
+    circle 260px at var(--pointer-x) var(--pointer-y),
+    rgba(167, 139, 250, 0.08),
+    transparent 72%
+  );
+  mix-blend-mode: screen;
+  transition: opacity 0.8s ease;
+}
+
+.starfield-cursor,
+.starfield-scanline {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.starfield-cursor {
+  background: radial-gradient(
+    circle 420px at var(--pointer-x) var(--pointer-y),
+    rgba(100, 160, 255, 0.08),
+    rgba(144, 70, 255, 0.035) 34%,
+    transparent 72%
+  );
+  opacity: 0.9;
+  transition: background-position 1.2s var(--ease-out-cine);
+}
+
+.starfield-scanline {
+  top: -100%;
+  height: 45%;
+  background: linear-gradient(to bottom, transparent, rgba(167, 139, 250, 0.035), transparent);
+  animation: inno-sky-scan 18s linear infinite;
 }
 
 ::selection {
@@ -202,15 +285,34 @@ body {
   transition:
     border-color 0.5s var(--ease-out-cine),
     box-shadow 0.5s var(--ease-out-cine),
-    transform 0.5s var(--ease-out-cine);
+    transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .panel-hover:hover {
   border-color: var(--line-bright);
   box-shadow:
-    inset 0 1px 0 0 rgba(167, 139, 250, 0.16),
-    0 0 44px -12px rgba(124, 58, 237, 0.45),
+    inset 0 1px 0 0 rgba(167, 139, 250, 0.25),
+    0 0 50px -10px rgba(124, 58, 237, 0.6),
     0 24px 60px -32px rgba(0, 0, 0, 0.9);
+  transform: translateY(-5px) scale(1.02);
+}
+
+.panel-hover::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  opacity: 0;
+  background: radial-gradient(
+    circle 250px at var(--pointer-x) var(--pointer-y),
+    rgba(167, 139, 250, 0.25),
+    transparent 60%
+  );
+  transition: opacity 0.6s var(--ease-out-cine);
+}
+
+.panel-hover:hover::after {
+  opacity: 1;
 }
 
 /* Corner ticks — the HUD motif that ties panels across pages together */
@@ -253,6 +355,8 @@ body {
    ============================================================ */
 
 .btn-primary {
+  position: relative;
+  overflow: hidden;
   --btn-glow: 0.55;
   display: inline-flex;
   align-items: center;
@@ -272,6 +376,23 @@ body {
     filter 0.45s var(--ease-out-cine);
 }
 
+.btn-primary::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(105deg, transparent 25%, rgba(255, 255, 255, 0.3) 48%, transparent 70%);
+  transform: translateX(-130%);
+  transition: transform 0.8s var(--ease-out-cine);
+}
+
+.btn-primary:hover::before {
+  transform: translateX(130%);
+}
+
+.btn-primary > * {
+  position: relative;
+}
+
 .btn-primary:hover {
   --btn-glow: 0.85;
   transform: translateY(-2px);
@@ -280,6 +401,11 @@ body {
 
 .btn-primary:active {
   transform: translateY(0);
+}
+
+.btn-ghost:active,
+.nav-cta:active {
+  transform: scale(0.97);
 }
 
 .btn-ghost {
@@ -411,6 +537,50 @@ body {
   }
 }
 
+@keyframes inno-sky-scan {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(330%);
+  }
+}
+
+@keyframes inno-horizon-pulse {
+  0%,
+  100% {
+    opacity: 0.62;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes shooting-star {
+  0% {
+    transform: translateX(0) translateY(0) rotate(45deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100vw) translateY(100vh) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+@keyframes slow-spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
 .animate-drift {
   animation: inno-drift var(--drift-dur, 14s) ease-in-out infinite;
   animation-delay: var(--drift-delay, 0s);
@@ -424,6 +594,19 @@ body {
 .animate-fade-up {
   animation: inno-fade-up 1s var(--ease-out-cine) both;
   animation-delay: var(--fade-delay, 0s);
+}
+
+.animate-slow-spin {
+  animation: slow-spin 150s linear infinite;
+}
+
+.hero-horizon {
+  animation: inno-horizon-pulse 9s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.hero-horizon-left {
+  animation-delay: -4.5s;
 }
 
 /* ============================================================
@@ -616,6 +799,52 @@ body {
 
 .nav-link:hover {
   color: #fff;
+}
+
+.nav-link-active::after,
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+.nav-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 0.9rem;
+  overflow: hidden;
+  border: 1px solid var(--line-bright);
+  border-radius: 999px;
+  color: var(--text-soft);
+  font-family: var(--font-orbitron), "Orbitron", sans-serif;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: color 0.4s var(--ease-out-cine), box-shadow 0.4s var(--ease-out-cine), transform 0.4s var(--ease-out-cine);
+}
+
+.nav-cta::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(110deg, transparent 20%, rgba(167, 139, 250, 0.35), transparent 80%);
+  transform: translateX(-120%);
+  transition: transform 0.7s var(--ease-out-cine);
+}
+
+.nav-cta:hover {
+  color: white;
+  box-shadow: 0 0 24px -8px rgba(167, 139, 250, 0.9);
+  transform: translateY(-1px);
+}
+
+.nav-cta:hover::before {
+  transform: translateX(120%);
+}
+
+.nav-cta > * {
+  position: relative;
 }
 
 .nav-link:hover::after,

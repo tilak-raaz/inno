@@ -87,7 +87,7 @@ export function Planet({ className = "", children, rings = false, style }: Plane
           <img
             src="/assets/planet-texture.png"
             alt=""
-            className="absolute left-1/2 top-1/2 h-[210.82%] w-[118.76%] max-w-none -translate-x-1/2 -translate-y-1/2 object-cover mix-blend-soft-light"
+            className="absolute left-1/2 top-1/2 h-[210.82%] w-[118.76%] max-w-none object-cover mix-blend-soft-light animate-slow-spin"
             draggable={false}
           />
         </div>
